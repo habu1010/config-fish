@@ -1,4 +1,4 @@
-if ! string length -q $WSL_DISTRO_NAME
+﻿if ! string length -q $WSL_DISTRO_NAME
     exit 0
 end
 
@@ -26,5 +26,5 @@ end
 set -x SSH_AUTH_SOCK /mnt/wsl/ssh-auth.sock
 if ! ss -a | grep -q $SSH_AUTH_SOCK
     rm -f $SSH_AUTH_SOCK
-    setsid socat UNIX-LISTEN:$SSH_AUTH_SOCK,fork EXEC:"$NPIPERELAY -ei -s //./pipe/openssh-ssh-agent",nofork >/dev/null 2>&1 &
+    setsid -f socat UNIX-LISTEN:$SSH_AUTH_SOCK,fork EXEC:"$NPIPERELAY -ei -s //./pipe/openssh-ssh-agent",nofork >/dev/null 2>&1 &
 end
